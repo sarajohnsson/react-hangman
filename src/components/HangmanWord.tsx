@@ -1,19 +1,30 @@
-import { useState } from 'react';
+import '../styles/word.scss';
 
-export function HangmanWord() {
-    const [isVisible, setIsVisible] = useState(false);
-    const word = 'test';
-    const guessedLetters = ['t'];
+type HangmanWordProps = {
+    guessedLetters: string[];
+    wordToGuess: string;
+    reveal?: boolean;
+};
 
+export function HangmanWord({
+    guessedLetters,
+    wordToGuess,
+    reveal = false,
+}: HangmanWordProps) {
     return (
         <div className="word-wrapper">
-            {word.split('').map((letter, index) => (
+            {wordToGuess.split('').map((letter, index) => (
                 <span className="displayed-word" key={index}>
                     <span
                         style={{
-                            visibility: guessedLetters.includes(letter)
-                                ? 'visible'
-                                : 'hidden',
+                            visibility:
+                                guessedLetters.includes(letter) || reveal
+                                    ? 'visible'
+                                    : 'hidden',
+                            color:
+                                !guessedLetters.includes(letter) && reveal
+                                    ? '#e03131'
+                                    : '#000',
                         }}>
                         {letter}
                     </span>
